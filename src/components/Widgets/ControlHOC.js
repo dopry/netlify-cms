@@ -17,6 +17,7 @@ class ControlHOC extends Component {
     metadata: ImmutablePropTypes.map,
     onChange: PropTypes.func.isRequired,
     onValidate: PropTypes.func.isRequired,
+    onOpenMediaLibrary: PropTypes.func.isRequired,
     onAddAsset: PropTypes.func.isRequired,
     onRemoveAsset: PropTypes.func.isRequired,
     getAsset: PropTypes.func.isRequired,
@@ -89,12 +90,23 @@ class ControlHOC extends Component {
   };
 
   render() {
-    const { controlComponent, field, value, metadata, onChange, onAddAsset, onRemoveAsset, getAsset } = this.props;
+    const {
+      controlComponent,
+      field,
+      value,
+      metadata,
+      onChange,
+      onOpenMediaLibrary,
+      onAddAsset,
+      onRemoveAsset,
+      getAsset
+    } = this.props;
     return React.createElement(controlComponent, {
       field,
       value,
       metadata,
       onChange,
+      onOpenMediaLibrary,
       onAddAsset,
       onRemoveAsset,
       getAsset,

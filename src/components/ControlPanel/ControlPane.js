@@ -24,7 +24,16 @@ export default class ControlPane extends Component {
   };
 
   controlFor(field) {
-    const { entry, fieldsMetaData, fieldsErrors, getAsset, onChange, onAddAsset, onRemoveAsset } = this.props;
+    const {
+      entry,
+      fieldsMetaData,
+      fieldsErrors,
+      getAsset,
+      onChange,
+      onOpenMediaLibrary,
+      onAddAsset,
+      onRemoveAsset
+    } = this.props;
     const widget = resolveWidget(field.get('widget'));
     const fieldName = field.get('name');
     const value = entry.getIn(['data', fieldName]);
@@ -49,6 +58,7 @@ export default class ControlPane extends Component {
           metadata={metadata}
           onChange={(newValue, newMetadata) => onChange(fieldName, newValue, newMetadata)}
           onValidate={this.props.onValidate.bind(this, fieldName)}
+          onOpenMediaLibrary={onOpenMediaLibrary}
           onAddAsset={onAddAsset}
           onRemoveAsset={onRemoveAsset}
           getAsset={getAsset}
@@ -86,6 +96,7 @@ ControlPane.propTypes = {
   fieldsMetaData: ImmutablePropTypes.map.isRequired,
   fieldsErrors: ImmutablePropTypes.map.isRequired,
   getAsset: PropTypes.func.isRequired,
+  onOpenMediaLibrary: PropTypes.func.isRequired,
   onAddAsset: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onValidate: PropTypes.func.isRequired,

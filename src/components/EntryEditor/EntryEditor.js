@@ -50,6 +50,7 @@ class EntryEditor extends Component {
         showDelete,
         onDelete,
         onValidate,
+        onOpenMediaLibrary,
         onAddAsset,
         onRemoveAsset,
         onCancelEdit,
@@ -84,6 +85,7 @@ class EntryEditor extends Component {
           getAsset={getAsset}
           onChange={onChange}
           onValidate={onValidate}
+          onOpenMediaLibrary={onOpenMediaLibrary}
           onAddAsset={onAddAsset}
           onRemoveAsset={onRemoveAsset}
           ref={c => this.controlPaneRef = c} // eslint-disable-line
@@ -145,6 +147,7 @@ EntryEditor.propTypes = {
   fieldsMetaData: ImmutablePropTypes.map.isRequired,
   fieldsErrors: ImmutablePropTypes.map.isRequired,
   getAsset: PropTypes.func.isRequired,
+  onOpenMediaLibrary: PropTypes.func.isRequired,
   onAddAsset: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onValidate: PropTypes.func.isRequired,
