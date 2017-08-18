@@ -14,6 +14,7 @@ class ControlHOC extends Component {
       PropTypes.string,
       PropTypes.bool,
     ]),
+    mediaPaths: ImmutablePropTypes.map.isRequired,
     metadata: ImmutablePropTypes.map,
     onChange: PropTypes.func.isRequired,
     onValidate: PropTypes.func.isRequired,
@@ -94,6 +95,7 @@ class ControlHOC extends Component {
       controlComponent,
       field,
       value,
+      mediaPaths,
       metadata,
       onChange,
       onOpenMediaLibrary,
@@ -104,6 +106,7 @@ class ControlHOC extends Component {
     return React.createElement(controlComponent, {
       field,
       value,
+      mediaPaths,
       metadata,
       onChange,
       onOpenMediaLibrary,

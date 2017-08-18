@@ -34,6 +34,7 @@ class EntryPage extends React.Component {
     createEmptyDraft: PropTypes.func.isRequired,
     discardDraft: PropTypes.func.isRequired,
     entry: ImmutablePropTypes.map,
+    mediaPaths: ImmutablePropTypes.map.isRequired,
     entryDraft: ImmutablePropTypes.map.isRequired,
     loadEntry: PropTypes.func.isRequired,
     persistEntry: PropTypes.func.isRequired,
@@ -121,6 +122,7 @@ class EntryPage extends React.Component {
       entry,
       entryDraft,
       fields,
+      mediaPaths,
       boundGetAsset,
       collection,
       changeDraftField,
@@ -147,6 +149,7 @@ class EntryPage extends React.Component {
         fields={fields}
         fieldsMetaData={entryDraft.get('fieldsMetaData')}
         fieldsErrors={entryDraft.get('fieldsErrors')}
+        mediaPaths={mediaPaths}
         onChange={changeDraftField}
         onValidate={changeDraftFieldValidation}
         onOpenMediaLibrary={openMediaLibrary}
@@ -162,18 +165,20 @@ class EntryPage extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const { collections, entryDraft } = state;
+  const { collections, entryDraft, mediaLibrary } = state;
   const slug = ownProps.params.slug;
   const collection = collections.get(ownProps.params.name);
   const newEntry = ownProps.route && ownProps.route.newRecord === true;
   const fields = selectFields(collection, slug);
   const entry = newEntry ? null : selectEntry(state, collection.get('name'), slug);
   const boundGetAsset = getAsset.bind(null, state);
+  const mediaPaths = mediaLibrary.get('controlMedia');
   return {
     collection,
     collections,
     newEntry,
     entryDraft,
+    mediaPaths,
     boundGetAsset,
     fields,
     slug,

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { List, Map, fromJS } from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { sortable } from 'react-sortable';
 import FontIcon from 'react-toolbox/lib/font_icon';
 import ObjectControl from './ObjectControl';
@@ -31,7 +32,9 @@ export default class ListControl extends Component {
     value: PropTypes.node,
     field: PropTypes.node,
     forID: PropTypes.string,
+    mediaPaths: ImmutablePropTypes.map.isRequired,
     getAsset: PropTypes.func.isRequired,
+    onOpenMediaLibrary: PropTypes.func.isRequired,
     onAddAsset: PropTypes.func.isRequired,
     onRemoveAsset: PropTypes.func.isRequired,
   };
@@ -134,7 +137,7 @@ export default class ListControl extends Component {
   };
 
   renderItem(item, index) {
-    const { value, field, getAsset, onAddAsset, onRemoveAsset } = this.props;
+    const { value, field, getAsset, mediaPaths, onOpenMediaLibrary, onAddAsset, onRemoveAsset } = this.props;
     const { itemStates } = this.state;
     const collapsed = itemStates.getIn([index, 'collapsed']);
     const classNames = [styles.item, collapsed ? styles.collapsed : styles.expanded];
@@ -162,6 +165,8 @@ export default class ListControl extends Component {
           className={styles.objectControl}
           onChange={this.handleChangeFor(index)}
           getAsset={getAsset}
+          onOpenMediaLibrary={onOpenMediaLibrary}
+          mediaPaths={mediaPaths}
           onAddAsset={onAddAsset}
           onRemoveAsset={onRemoveAsset}
         />
