@@ -113,7 +113,7 @@ class MediaLibrary extends React.Component {
     const files = [...fileList];
     const file = files[0];
     return dispatch(persistMedia(file, privateUpload))
-      .then(() => dispatch(0, loadMedia(this.state.query)));
+      .then(() => dispatch(loadMedia(0, this.state.query)));
   };
 
   handleInsert = () => {
