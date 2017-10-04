@@ -5,7 +5,7 @@ describe('sanitizeIRI', () => {
   it('should keep valid URI chars (letters digits _ - . ~)', () => {
     expect(
       sanitizeIRI("This, that-one_or.the~other 123!")
-    ).toEqual('Thisthat-one_or.the~other123');
+    ).toEqual('This--that-one_or.the~other-123-');
   });
   
   it('should not remove accents', () => {
@@ -31,13 +31,13 @@ describe('sanitizeIRI', () => {
   
   it('should allow a custom replacement character', () => {
     expect(
-      sanitizeIRI("duck\\goose.elephant", { replacement: '-' })
-    ).toEqual('duck-goose.elephant');
+      sanitizeIRI("duck\\goose.elephant", '_')
+    ).toEqual('duck_goose.elephant');
   });
   
   it('should not allow an improper replacement character', () => {
     expect(() => {
-      sanitizeIRI("I! like! dollars!", { replacement: '$' });
+      sanitizeIRI("I! like! dollars!", '$' );
      }).toThrow();
   });
   
@@ -65,17 +65,24 @@ describe('sanitizeSlug', ()=> {
   });
 
   it('throws an error for non-string replacements', () => {
-    expect(() => sanitizeSlug('test', { replacement: {} })).toThrowError("`options.replacement` must be a string.");
-    expect(() => sanitizeSlug('test', { replacement: [] })).toThrowError("`options.replacement` must be a string.");
-    expect(() => sanitizeSlug('test', { replacement: false })).toThrowError("`options.replacement` must be a string.");
-    expect(() => sanitizeSlug('test', { replacement: null } )).toThrowError("`options.replacement` must be a string.");
-    expect(() => sanitizeSlug('test', { replacement: 11232 })).toThrowError("`options.replacement` must be a string.");
+    expect(() => sanitizeSlug('test', {})).toThrowError("`replacement` must be a string.");
+    expect(() => sanitizeSlug('test', [])).toThrowError("`replacement` must be a string.");
+    expect(() => sanitizeSlug('test', false)).toThrowError("`replacement` must be a string.");
+    expect(() => sanitizeSlug('test', null)).toThrowError("`replacement` must be a string.");
+    expect(() => sanitizeSlug('test', 11232)).toThrowError("`replacement` must be a string.");
     // do not test undefined for this variant since a default is set in the cosntructor. 
-    //expect(() => sanitizeSlug('test', { replacement: undefined })).toThrowError("`options.replacement` must be a string.");
-    expect(() => sanitizeSlug('test', { replacement: ()=>{} })).toThrowError("`options.replacement` must be a string.");
+    expect(() => sanitizeSlug('test', undefined )).not.toThrow();
+    expect(() => sanitizeSlug('test', ()=>{})).toThrowError("`replacement` must be a string.");
+  });
+
+  it('should keep valid URI chars (letters digits _ - . ~)', () => {
+    expect(
+      sanitizeSlug("This, that-one_or.the~other 123!")
+    ).toEqual('This-that-one_or.the~other-123');
   });
 
   it('removes double replacements', () => {
+    expect(sanitizeSlug('test--test')).toEqual('test-test');
      expect(sanitizeSlug('test   test')).toEqual('test-test');
   });
 
@@ -84,7 +91,7 @@ describe('sanitizeSlug', ()=> {
   });
 
   it('uses alternate replacements', () => {
-    expect(sanitizeSlug('test   test   ', { replacement: '_' })).toEqual('test_test');
+    expect(sanitizeSlug('test   test   ', '_')).toEqual('test_test');
   });
 
 });
